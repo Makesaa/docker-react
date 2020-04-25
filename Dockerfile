@@ -1,20 +1,10 @@
-# Use  docker image as a base
-# here alpine is base image 
-FROM node:alpine as builder
-
-#working Directory
-WORKDIR /app
-# Download and install a Dependency
-
-COPY package.json .
+FROM node:alpine
+WORKDIR '/app'
+COPY package*.json ./
 RUN npm install
-
 COPY . .
+RUN npm run build
 
-#tell when to starts as acontainer
-CMD ["npm","run", "build"]
-
-# second phase for nginx 
 FROM nginx
 EXPOSE 80
-COPY --from=builder /app/build /usr/share/ndinx/html
+COPY --from=0 /app/build /usr/share/nginx/html
