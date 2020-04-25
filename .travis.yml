@@ -6,5 +6,4 @@ before_install:
   - docker build -t makesaa/docker-react -f Dockerfile.dev .
 
  script:
-    - docker run -e CI=true makesaa/docker-react npm run test --coverage
-language: generics
+    - docker run -e CI=true makesaa/docker-react npm run test -- --coverage
